@@ -1,3 +1,6 @@
+//- mixin tweetsDisp(time, tweet)
+//-   h3 = time
+//-   p = tweet
 mixin list(time, tweet)
   h4 #{time}
   p #{tweet}
@@ -9,7 +12,7 @@ html
   body
     h1 Welcomes
     h2 This page shows tweets for #{a}
-    each data in data
-      +list(data.created_at, data.text)
+    each values in data
+      +list(values.created_at, values.text)
 
 
