@@ -1,0 +1,15 @@
+mixin list(time, tweet)
+  h4 #{time}
+  p #{tweet}
+
+doctype html
+html
+  head
+    title Tweets
+  body
+    h1 Welcomes
+    h2 This page shows tweets for #{a}
+    each data in data
+      +list(data.created_at, data.text)
+
+
