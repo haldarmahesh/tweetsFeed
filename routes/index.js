@@ -14,12 +14,18 @@ router.get('/maa', function(req, res, next) {
   });
 });
 
-
+var firstLoad = true;
 router.get('/tweets', function(req, res, next) {
-  if (req.query.screenName == null) {
-    console.log('Error');
-    res.redirect('error');
-  }
+  // if (req.query.screenName == null) {
+  //   console.log('Error');
+  //   res.redirect('error');
+  // }
+  setInterval(function(){
+    getData(req, res, next);
+  },2000);
+});
+
+function getData(req, res, next) {
   var Twit = require('twit');
 
   var T = new Twit({
@@ -36,23 +42,24 @@ router.get('/tweets', function(req, res, next) {
     include_entities: true
   };
   T.get('statuses/user_timeline', options, function(err, data) {
-    
-    for (var i = 0; i < data.length; i++) {
-      console.log(data[i].created_at + " => " + data[i].text);
-      console.log('--------------------------');
+    if (firstLoad) {
+      renderJade(data);
+      firstLoad = false;
     }
-    rend(data);
   });
-  console.log('This is value ' + req.query.screenName);
-  function rend(data)
+
+  if(!firstLoad)
   {
-    res.render('tweets', {
-    title : req.query.screenName,
-    a: req.query.screenName,
-    data : data
-  });
+    console.log('mamamamamamam');
   }
-});
+  console.log('This is value ' + req.query.screenName);
 
-
+  function renderJade(data) {
+    res.render('tweets', {
+      title: req.query.screenName,
+      a: req.query.screenName,
+      data: data
+    });
+  }
+}
 module.exports = router;
