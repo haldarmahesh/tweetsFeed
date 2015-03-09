@@ -32,7 +32,7 @@ router.get('/tweets', function(req, res, next) {
     getData(req, res, next);
   else {
     var stream = T.stream('statuses/filter', {
-      track: 'love'
+      track: 'maheshHaldar, love'
     });
 
     stream.on('tweet', function(tweet) {
