@@ -1,18 +1,50 @@
-//- mixin tweetsDisp(time, tweet)
-//-   h3 = time
-//-   p = tweet
-mixin list(time, tweet)
-  h4 #{time}
-  p #{tweet}
-
-doctype html
-html
-  head
-    title Tweets
-  body
-    h1 Welcomes
-    h2 This page shows tweets for #{a}
-    each values in data
-      +list(values.created_at, values.text)
+extends layout
+mixin list( dp_src, name, screen_name,description, time, tweet,id, ex)
+  //- if(typeof(ex)!='undefined')
+  //-   ex=ex.media
+  //-   if(typeof(ex)!='undefined')
+  //-     ex=ex.media_url
+  //-   else
+  //-     ex='notFound'
+  //- else
+  //-   ex='notFound'
+  .well
+    .profile-info
+      .dp-container 
+        a(href='https://twitter.com/#{screen_name}', target='_blank') 
+          img(src='#{dp_src}')
+      .name-container
+        a(href='https://twitter.com/#{screen_name}', target='_blank') 
+          strong #{name}
+          | &nbsp;@#{screen_name}
+        br
+        | #{description}
+      .clearfix
+    .tweet-container
+      h4 #{time}
+      p #{tweet}
+    .media-container
+      if(ex=='notFound')
+        p 
+      else
+        p
+    .view-full-tweet-container.pull-right
+      a(href='https://twitter.com/#{screen_name}/status/#{id}', target='_blank')
+        | View full tweet
+    .clearfix
+block title
+  title #{title} Tweets
+block content
+  include header.jade
+  .container
+    .row
+      .col-xs-12.col-sm-8.col-md-7.col-lg-5.tweet-logo-container
+        img(src='images/jslogo.png')
+      if(typeof(data[0].user.profile_banner_url)!='undefined')
+        .col-xs-12.col-sm-12.col-md-12.col-lg-12.banner-container.well(style="background-image:url(#{data[0].user.profile_banner_url})")
+      else
+        .col-xs-12.col-sm-12.col-md-12.col-lg-12.banner-container.well.default-banner
+      each values in data
+        +list( values.user.profile_image_url, values.user.name, values.user.screen_name, values.user.description,values.created_at, values.text, values.id, values.extended_entities)
 
 

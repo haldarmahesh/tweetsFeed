@@ -47,6 +47,7 @@ router.get('/tweets', function(req, res, next) {
   function rend(data)
   {
     res.render('tweets', {
+    title : req.query.screenName,
     a: req.query.screenName,
     data : data
   });

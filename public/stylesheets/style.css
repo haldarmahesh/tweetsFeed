@@ -1,8 +1,84 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+html {
+  height: 100%;
 }
+body {
+  font-family: 'Roboto', sans-serif !important;
+  background-color: #1869A0 !important;
+  /*background-image: url('../images/twitter-bird.png') !important;*/
+  font-size: 16px !important;
+  background: radial-gradient(circle, #2090C2, #1869A0);
+  background-position-y: 100%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+.navbar {
+  border-radius: 0px !important;
+  min-height: 60px !important;
+}
+.home-form-container {
+  float: none !important;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 40px !important;
+  border-radius: 4px;
+  box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.6);
+  margin-top: 90px;
+}
+form {
+  text-align: left !important;
+  font-size: 16px;
+}
+input[type='radio'], label {
+  cursor: pointer;
+}
+.tweet-logo-container {
+  float: none !important;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 90px;
+  padding-bottom: 30px;
+  text-align: center;
+  color: white;
+}
+header {
+  position: fixed;
+  width: 100%;
+  z-index: 10;
+}
+.well {
+  /*box-shadow: 0px 0px 10px white !important;*/
+}
+.dp-container, .name-container {
+  float: left;
+}
+.profile-info {
+  padding: 10px;
+}
+.dp-container img {
+  border-radius: 4px;
+}
+.banner-container{
+  background-image: url('http://tophdart.com/images/900/twitter-wallpaper-1.jpg');
+  background-color: black !important;
+  min-height: 230px !important;
+  color: white !important;
+  text-align: center;
+  background-size: 100%;
+}
+.default-banner{
+  background-position: 50%;
+}
+.banner-container h2{
+  padding-top: 60px !important;
 
-a {
-  color: #00B7FF;
+}
+.name-container
+{
+  padding-left: 10px;
+  padding-right: 10px;
+  font-weight: 700;
+  font-size: 18px;
 }
