@@ -21,37 +21,43 @@ var T = new Twit({
   access_token: '3012054320-daYiobkck9M3igwnyZVnLEhYpTxMI7bVlkILm7S',
   access_token_secret: '6Ac4EICp6ESzenhFOYKSH0EaylCUFo5ixlTM1lLCSaBDB'
 });
-var options = [];
 
-var firstLoad = true;
+
 router.get('/tweets', function(req, res, next) {
   // if (req.query.screenName == null) {
   //   console.log('Error');
   //   res.redirect('error');
   // }
-  options = {
+  if (req.query.tweetType == 'all')
+    getData(req, res, next);
+  else {
+    var stream = T.stream('statuses/filter', {
+      track: 'love'
+    });
+
+    stream.on('tweet', function(tweet) {
+      console.log(tweet)
+    });
+
+    res.render('liveTweets');
+  }
+});
+
+function getData(req, res, next) {
+  var options = {
     count: req.query.count,
     screen_name: req.query.screenName,
     // exclude_replies : true,
     include_entities: true
   };
-  setInterval(function() {
-    getData(req, res, next);
-  }, 2000);
-});
-
-function getData(req, res, next) {
-
   T.get('statuses/user_timeline', options, function(err, data) {
-    if (firstLoad) {
-      renderJade(data);
-      firstLoad = false;
-    }
-  });
 
-  if (!firstLoad) {
-    console.log('mamamamamamam');
-  }
+    for (var i = 0; i < data.length; i++) {
+      console.log(data[i].created_at + " => " + data[i].text);
+      console.log('--------------------------');
+    }
+    renderJade(data);
+  });
   console.log('This is value ' + req.query.screenName);
 
   function renderJade(data) {
