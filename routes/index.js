@@ -1,5 +1,12 @@
 var express = require('express');
 var router = express.Router();
+var io = require('socket.io').listen(80);
+io.socket.on('connection',function(socket){
+  socket.emit('news', {hello : 'world'});
+  socket.on('my other event', function(data){
+    console.log(data);
+  });
+});
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
