@@ -1,66 +1,87 @@
 var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-
-var routes = require('./routes/index');
-var users = require('./routes/users');
-var mahesh = require('./routes/mahesh');
-
 var app = express();
+var port = 3000;
+var Twit = require('twit');
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
+var T = new Twit({
+  consumer_key: 'h71wsXZ16MdBtPVDLvTRrmVnd',
+  consumer_secret: 'aj6V8D46VosM0CRMRNioi9YH6uhKQSVrvgCIsknQdhcUdalvJQ',
+  access_token: '3012054320-daYiobkck9M3igwnyZVnLEhYpTxMI7bVlkILm7S',
+  access_token_secret: '6Ac4EICp6ESzenhFOYKSH0EaylCUFo5ixlTM1lLCSaBDB'
+});
+
+app.set('views', __dirname + '/views')
 app.set('view engine', 'jade');
+app.engine('jade', require('jade').__express);
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.use(function(req, res, next){
-  console.log('%d',Date.now());
-  next();
-});
-app.use('/', routes);
-app.use('/mahesh', mahesh);
-app.use('/users', users);
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+app.get('/', function(req, res) {
+  res.render('index');
 });
 
-// error handlers
+app.get('/chat', function(req, res) {
+  res.render('page');
+});
 
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: err
+
+app.get('/tweets', function(req, res, next) {
+  // if (req.query.screenName == null) {
+  //   console.log('Error');
+  //   res.redirect('error');
+  // }
+  if (req.query.tweetType == 'all')
+    getData(req, res, next);
+  else {
+    var stream = T.stream('statuses/filter', {
+      track: 'maheshHaldar, love'
     });
+
+    stream.on('tweet', function(tweet) {
+      console.log(tweet)
+    });
+
+    res.render('liveTweets');
+  }
+});
+
+function getData(req, res, next) {
+  var options = {
+    count: req.query.count,
+    screen_name: req.query.screenName,
+    // exclude_replies : true,
+    include_entities: true
+  };
+  T.get('statuses/user_timeline', options, function(err, data) {
+
+    for (var i = 0; i < data.length; i++) {
+      console.log(data[i].created_at + " => " + data[i].text);
+      console.log('--------------------------');
+    }
+    renderJade(data);
   });
+  console.log('This is value ' + req.query.screenName);
+
+  function renderJade(data) {
+    res.render('tweets', {
+      title: req.query.screenName,
+      a: req.query.screenName,
+      data: data
+    });
+  }
 }
 
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: {}
+
+
+app.use(express.static(__dirname + '/public'));
+
+var io = require('socket.io').listen(app.listen(port));
+
+io.sockets.on('connection', function(socket) {
+  socket.emit('message', {
+    message: 'welcome to the chat'
+  });
+  socket.on('send', function(data) {
+    io.sockets.emit('message', data);
   });
 });
 
-
-module.exports = app;
+console.log('listening to port' + port);
