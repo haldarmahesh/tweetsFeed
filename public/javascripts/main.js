@@ -3,6 +3,7 @@
     var tweetContainer = document.getElementById('tweetContainer');
     socket.on('message', function(data) {
       if (data.message['text']) {
+        $(".load").hide();
         console.log(data.message);
         var html = '<div class="well">';
         html += ' <div class="profile-info">';
@@ -24,7 +25,7 @@
         html += '</div>';
         html += ' <div class="media-container">';
         if (data.message.entities.media)
-          html+= '<img src="'+data.message.entities.media[0].media_url+'">';
+          html+= '<center><img src="'+data.message.entities.media[0].media_url+'"></center>';
         html += ' <p></p>';
         html += ' </div>';
         html += ' <div class="clearfix"></div>';

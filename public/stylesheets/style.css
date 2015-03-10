@@ -64,6 +64,10 @@ header {
 .dp-container img {
   border-radius: 4px;
 }
+.dp-container{
+  width:48px;
+  height: 48px;
+}
 .banner-container {
   background-image: url('http://tophdart.com/images/900/twitter-wallpaper-1.jpg');
   background-color: black !important;

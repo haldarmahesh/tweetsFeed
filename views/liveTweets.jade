@@ -7,7 +7,12 @@ block content
     .row
       .col-xs-12.col-sm-12.col-md-
     .welcome.well
-      h1 Live tweets for #{screenName}
+      center
+        h1 Live tweets for #{screenName}
+        .load
+          | waiting for someone to tweet
+          br
+          img(src='images/load.gif')
     #tweetContainer
   script(src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js")
   script(src='/javascripts/main.js')
