@@ -32,11 +32,16 @@ app.get('/tweets', function(req, res, next) {
     getData(req, res, next);
   else {
     var stream = T.stream('statuses/filter', {
-      track: 'maheshHaldar, love'
+      track: 'apple'
     });
+    io.sockets.on('connection', function(socket) {
+      stream.on('tweet', function(tweet) {
+        console.log(tweet);
+        socket.emit('message', {
+          message: tweet
+        });
 
-    stream.on('tweet', function(tweet) {
-      console.log(tweet)
+      });
     });
 
     res.render('liveTweets');

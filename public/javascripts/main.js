@@ -1,19 +1,14 @@
-console.log('mah1212');
-
-// $(document).ready(function(){
-//   alert('hey a');
-//   console.log('mah');
-
-//   $("#tweetContainer").click(function(){
-//     alert('this is done');
-//   });
-// });
-$(document).ready(function() {
-  console.log("ready!");
-
-  function clickEvent() {
-    $("#tweetContainer").click(function() {
-      console.log('this is done');
-    });
-  }
-});
+window.onload = function(){
+  var socket = io.connect('http://localhost:3000');
+  var tweetContainer = document.getElementById('tweetContainer');
+  socket.on('message', function(data){
+    if(data.message['text'])
+    {
+      console.log(data.message);
+      var html ='<p>';
+      html += data.message['text'];
+      $("#tweetContainer").append(html);
+      // tweetContainer.innerHTML = html;
+    }
+  });
+}
