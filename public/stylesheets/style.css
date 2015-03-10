@@ -5,6 +5,7 @@ body {
   font-family: 'Roboto', sans-serif !important;
   background-color: #1869A0 !important;
   /*background-image: url('../images/twitter-bird.png') !important;*/
+  
   font-size: 16px !important;
   background: radial-gradient(circle, #2090C2, #1869A0);
   background-position-y: 100%;
@@ -34,6 +35,9 @@ form {
 input[type='radio'], label {
   cursor: pointer;
 }
+input {
+  margin-bottom: 15px !important;
+}
 .tweet-logo-container {
   float: none !important;
   margin-left: auto;
@@ -60,7 +64,7 @@ header {
 .dp-container img {
   border-radius: 4px;
 }
-.banner-container{
+.banner-container {
   background-image: url('http://tophdart.com/images/900/twitter-wallpaper-1.jpg');
   background-color: black !important;
   min-height: 230px !important;
@@ -68,17 +72,19 @@ header {
   text-align: center;
   background-size: 100%;
 }
-.default-banner{
+.default-banner {
   background-position: 50%;
 }
-.banner-container h2{
+.banner-container h2 {
   padding-top: 60px !important;
-
 }
-.name-container
-{
+.name-container {
   padding-left: 10px;
   padding-right: 10px;
   font-weight: 700;
   font-size: 18px;
+}
+.welcome
+{
+  margin-top: 90px;
 }

@@ -31,20 +31,28 @@ app.get('/tweets', function(req, res, next) {
   if (req.query.tweetType == 'all')
     getData(req, res, next);
   else {
+    console.log("qqqqqq" + req.query.screenName);
     var stream = T.stream('statuses/filter', {
-      track: 'apple'
+      track: req.query.screenName
     });
+
+
     io.sockets.on('connection', function(socket) {
       stream.on('tweet', function(tweet) {
         console.log(tweet);
         socket.emit('message', {
           message: tweet
         });
+        socket.on('disconnect', function() {
+          console.log('DISCONNESSO!!! ');
+          stream.stop();
+        });
 
       });
     });
 
-    res.render('liveTweets');
+
+    res.render('liveTweets',{screenName:req.query.screenName});
   }
 });
 
