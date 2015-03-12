@@ -1,5 +1,5 @@
 extends layout
-mixin list( dp_src, name, screen_name,description, time, tweet,id, ex)
+mixin list( dp_src, name, screen_name,description, time, tweet,id, ex, id_str)
   //- if(typeof(ex)!='undefined')
   //-   ex=ex.media
   //-   if(typeof(ex)!='undefined')
@@ -45,6 +45,6 @@ block content
       else
         .col-xs-12.col-sm-12.col-md-12.col-lg-12.banner-container.well.default-banner
       each values in data
-        +list( values.user.profile_image_url, values.user.name, values.user.screen_name, values.user.description,values.created_at, values.text, values.id, values.extended_entities)
+        +list( values.user.profile_image_url, values.user.name, values.user.screen_name, values.user.description,values.created_at, values.text, values.id_str,  values.extended_entities, values.id_str)
 
 

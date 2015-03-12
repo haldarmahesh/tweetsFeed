@@ -1,5 +1,12 @@
 var express = require('express');
 var router = express.Router();
+var io = require('socket.io').listen(80);
+io.socket.on('connection',function(socket){
+  socket.emit('news', {hello : 'world'});
+  socket.on('my other event', function(data){
+    console.log(data);
+  });
+});
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -13,28 +20,37 @@ router.get('/maa', function(req, res, next) {
     title: 'Express'
   });
 });
+var Twit = require('twit');
 
-var firstLoad = true;
+var T = new Twit({
+  consumer_key: 'h71wsXZ16MdBtPVDLvTRrmVnd',
+  consumer_secret: 'aj6V8D46VosM0CRMRNioi9YH6uhKQSVrvgCIsknQdhcUdalvJQ',
+  access_token: '3012054320-daYiobkck9M3igwnyZVnLEhYpTxMI7bVlkILm7S',
+  access_token_secret: '6Ac4EICp6ESzenhFOYKSH0EaylCUFo5ixlTM1lLCSaBDB'
+});
+
+
 router.get('/tweets', function(req, res, next) {
   // if (req.query.screenName == null) {
   //   console.log('Error');
   //   res.redirect('error');
   // }
-  setInterval(function(){
+  if (req.query.tweetType == 'all')
     getData(req, res, next);
-  },2000);
+  else {
+    var stream = T.stream('statuses/filter', {
+      track: 'maheshHaldar, love'
+    });
+
+    stream.on('tweet', function(tweet) {
+      console.log(tweet)
+    });
+
+    res.render('liveTweets');
+  }
 });
 
 function getData(req, res, next) {
-  var Twit = require('twit');
-
-  var T = new Twit({
-    consumer_key: 'h71wsXZ16MdBtPVDLvTRrmVnd',
-    consumer_secret: 'aj6V8D46VosM0CRMRNioi9YH6uhKQSVrvgCIsknQdhcUdalvJQ',
-    access_token: '3012054320-daYiobkck9M3igwnyZVnLEhYpTxMI7bVlkILm7S',
-    access_token_secret: '6Ac4EICp6ESzenhFOYKSH0EaylCUFo5ixlTM1lLCSaBDB'
-  });
-
   var options = {
     count: req.query.count,
     screen_name: req.query.screenName,
@@ -42,16 +58,13 @@ function getData(req, res, next) {
     include_entities: true
   };
   T.get('statuses/user_timeline', options, function(err, data) {
-    if (firstLoad) {
-      renderJade(data);
-      firstLoad = false;
-    }
-  });
 
-  if(!firstLoad)
-  {
-    console.log('mamamamamamam');
-  }
+    for (var i = 0; i < data.length; i++) {
+      console.log(data[i].created_at + " => " + data[i].text);
+      console.log('--------------------------');
+    }
+    renderJade(data);
+  });
   console.log('This is value ' + req.query.screenName);
 
   function renderJade(data) {
