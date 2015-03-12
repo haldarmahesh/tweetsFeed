@@ -3,10 +3,12 @@ html {
 }
 body {
   font-family: 'Roboto', sans-serif !important;
-  background-color: #1869A0 !important;
   /*background-image: url('../images/twitter-bird.png') !important;*/
   
   font-size: 16px !important;
+}
+.body-index {
+  background-color: #1869A0 !important;
   background: radial-gradient(circle, #2090C2, #1869A0);
   background-position-y: 100%;
   background-repeat: no-repeat;
@@ -47,6 +49,17 @@ input {
   text-align: center;
   color: white;
 }
+.tweet-container {
+  background-color: #55ACEE;
+  padding: 20px;
+  border-radius: 4px;
+  color: white;
+
+}
+.tweet-container p{
+  margin-bottom: 0px !important;
+    font-size: 30px;
+}
 header {
   position: fixed;
   width: 100%;
@@ -64,8 +77,8 @@ header {
 .dp-container img {
   border-radius: 4px;
 }
-.dp-container{
-  width:48px;
+.dp-container {
+  width: 48px;
   height: 48px;
 }
 .banner-container {
@@ -88,7 +101,9 @@ header {
   font-weight: 700;
   font-size: 18px;
 }
-.welcome
-{
+.welcome {
   margin-top: 90px;
+}
+#tweetContainer {
+  display: none;
 }
