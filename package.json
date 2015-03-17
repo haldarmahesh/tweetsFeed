@@ -11,11 +11,12 @@
     "debug": "~2.1.1",
     "express": "~4.12.0",
     "jade": "~1.9.2",
+    "mongodb": "*",
+    "mongoose": "^3.8.24",
+    "monk": "*",
     "morgan": "~1.5.1",
     "serve-favicon": "~2.2.0",
-    "mongodb": "*",
-    "monk": "*",
-    "twit": "^1.1.18",
-    "socket.io" : "latest"
+    "socket.io": "latest",
+    "twit": "^1.1.18"
   }
 }

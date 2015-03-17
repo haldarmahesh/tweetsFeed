@@ -2,32 +2,33 @@ extends layout
 block title
   title Welcome JSChannel
 block content
-  include header
-  .container
-    .row
-      .col-xs-12.col-sm-8.col-md-7.col-lg-5.home-form-container
-        .row
-          .col-xs-12.col-sm-12.col-md-12.col-lg-12
-            img(src='images/jslogo.png', width='100%')
-          h1 Twitter Feeds
-          form(action='/tweets', method='GET')
-            input.form-control(type='text', placeholder='Enter twitter screen name', name='screenName', required)
-            br
-            input.form-control(type='number',min=1, placeholder='Enter count of tweets', name='count', required)
-            br
-            .col-xs-6.col-sm-6.col-md-6.col-lg-6
-              input(type='radio', id='allTweet', name='tweetType',value = 'all' , required)
-              label(for='allTweet') &nbsp;All Tweets
-            .col-xs-6.col-sm-6.col-md-6.col-lg-6
-              input(type='radio', id='liveTweet', name='tweetType',value = 'live' , autocomplete='off', required)
-              label(for='liveTweet') &nbsp;Live Tweets
-            
-            button.form-control.btn.btn-danger(type='submit') 
-              strong Get Tweets
-  //- blockquote.twitter-tweet(align='left', width='350')
-  //-     p
-  //-       | We are stronger than people think we are. We are MORE than equal! More power to all the women/girls out there!!! 
-  //-       a(href='https://twitter.com/hashtag/HappyWomensDay?src=hash') #HappyWomensDay
-  //-     | — Alia Bhatt (@aliaa08) 
-  //-     a(href='https://twitter.com/aliaa08/status/574389140558475264') March 8, 2015
-  //-   script(async='', src='//platform.twitter.com/widgets.js', charset='utf-8')
+  body
+    include header
+    .container
+      .row
+        .col-xs-10.col-sm-8.col-md-7.col-lg-5.home-form-container.body-index
+          .row
+            .col-xs-12.col-sm-12.col-md-12.col-lg-12
+              img(src='images/jslogo.png', width='100%')
+            h1 Twitter Feeds
+            form.form1(action='/tweets', method='GET')
+              input.form-control(type='text', placeholder='Enter twitter screen name', name='screenName', required)
+              input.form-control.count-container(type='number',min=1, placeholder='Enter count of tweets', name='count', required)
+              .col-xs-6.col-sm-6.col-md-6.col-lg-6
+                input(type='radio', id='allTweet', name='tweetType',value = 'all' , required)
+                label(for='allTweet') &nbsp;All Tweets
+              .col-xs-6.col-sm-6.col-md-6.col-lg-6
+                input(type='radio', id='liveTweet', name='tweetType',value = 'live' , autocomplete='off', required)
+                label(for='liveTweet') &nbsp;Live Tweets
+              
+              button.form-control.btn.btn-danger(type='submit') 
+                strong Get Tweets
+    include jquery.jade
+    script(src='javascripts/indexJs.js')
+    //- blockquote.twitter-tweet(align='left', width='350')
+    //-     p
+    //-       | We are stronger than people think we are. We are MORE than equal! More power to all the women/girls out there!!! 
+    //-       a(href='https://twitter.com/hashtag/HappyWomensDay?src=hash') #HappyWomensDay
+    //-     | — Alia Bhatt (@aliaa08) 
+    //-     a(href='https://twitter.com/aliaa08/status/574389140558475264') March 8, 2015
+    //-   script(async='', src='//platform.twitter.com/widgets.js', charset='utf-8')

@@ -4,9 +4,19 @@ block title
 block content
   include header
   .container
-    h1 Mahesh
-    #tweetContainer Mahesh Haldar
+    .row
+      .col-xs-12.col-sm-12.col-md-
+    .welcome
+      center
+        h1 Live tweets for #{screenName}
+        .load
+          | waiting for someone to tweet
+          br
+          img(src='images/load.gif')
+    #tweetContainer
   script(src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js")
-  script(src='javascripts/main.js')
+  script(src='/javascripts/main.js')
+  script(src='http://localhost:3000/socket.io/socket.io.js')
+
   script.
     console.log('mah');
